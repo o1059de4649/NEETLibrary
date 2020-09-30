@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace NEETLibrary.NEETLibrary.Tiba.Com.CSVConvert
+namespace NEETLibrary.Tiba.Com.CSVConvert
 {
     static public class CSVConvertMethods
     {

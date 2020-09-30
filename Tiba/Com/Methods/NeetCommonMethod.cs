@@ -100,6 +100,21 @@ namespace NEETLibrary.Tiba.Com.Methods
                 return null;
             }
         }
+    }
 
+    public static class CopyInterFace<T> {
+
+        public static T DeepCopy(T src)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                var binaryFormatter
+                  = new System.Runtime.Serialization
+                        .Formatters.Binary.BinaryFormatter();
+                binaryFormatter.Serialize(memoryStream, src); // シリアライズ
+                memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
+                return (T)binaryFormatter.Deserialize(memoryStream); // デシリアライズ
+            }
+        }
     }
 }
