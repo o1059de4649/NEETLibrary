@@ -5,22 +5,25 @@ using NEETLibrary.TestFolder;
 using NEETLibrary.Tiba.Com.CSVConvert;
 using NEETLibrary.Tiba.Com.IEnumerableEx;
 using NEETLibrary.Tiba.Com.Methods;
+using System.Data.SqlClient;
 
 namespace NEETLibrary
 {
     class Program
     {
+        const string connectionString = "Server=tcp:pakupaku.database.windows.net,1433;Initial Catalog=PakuPakuDB;Persist Security Info=False;User ID=Tiba;Password=Musi1379;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         static void Main(string[] args)
         {
-            TestSubString();
-            TestKanaToHira();
-            TestHiraToKana();
-            TestIntParseEx();
-            TestCSVRead();
-            TestDicRead();
-            TestDateTime();
-            TestCopy();
-            TestNList();
+            TestSQL();
+            //TestSubString();
+            //TestKanaToHira();
+            //TestHiraToKana();
+            //TestIntParseEx();
+            //TestCSVRead();
+            //TestDicRead();
+            //TestDateTime();
+            //TestCopy();
+            //TestNList();
         }
 
         static void TestSubString()
@@ -124,6 +127,21 @@ namespace NEETLibrary
             var strNList = new NList<string>() { "A", "B", "C" };
             Console.WriteLine(strNList.GetNext(50));
             Console.WriteLine(strNList.GetPrev(2));
+        }
+
+        static void TestSQL()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var queryString = "SELECT * FROM dbo.m_user";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                var result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    Console.WriteLine("ID:"+result.GetValue(0)+" name:"+ result.GetValue(1));
+                }
+            }
         }
     }
 }

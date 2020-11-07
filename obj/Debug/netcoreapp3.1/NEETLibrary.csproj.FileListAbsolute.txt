@@ -7,7 +7,14 @@ D:\git\NEETLibrary\NEETLibrary\bin\Debug\netcoreapp3.1\NEETLibrary.pdb
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.csprojAssemblyReference.cache
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.AssemblyInfoInputs.cache
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.AssemblyInfo.cs
-D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.csproj.CoreCompileInputs.cache
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.dll
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.pdb
 D:\git\NEETLibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.genruntimeconfig.cache
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\git\NEETlibrary\NEETLibrary\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\git\NEETlibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.csproj.CoreCompileInputs.cache
+D:\git\NEETlibrary\NEETLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.csproj.CopyComplete

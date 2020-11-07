@@ -25,6 +25,8 @@ namespace NEETLibrary.Tiba.Com.Methods
         public static string SubStringEx(this string data,int startIndex,int count)
         {
             var result = data;
+            if (count <= 0) count = 0;
+            if (startIndex <= 0) startIndex = 0;
             //カウンタを超えてしまうケース
             if (data.Length < startIndex + count)
             {
@@ -35,6 +37,7 @@ namespace NEETLibrary.Tiba.Com.Methods
             }
             return result;
         }
+
 
         /// <summary>
         /// カナ→ひら
