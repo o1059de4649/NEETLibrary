@@ -5,13 +5,15 @@ using NEETLibrary.TestFolder;
 using NEETLibrary.Tiba.Com.CSVConvert;
 using NEETLibrary.Tiba.Com.IEnumerableEx;
 using NEETLibrary.Tiba.Com.Methods;
+using NEETLibrary.Tiba.Com.SqlConnection;
 using System.Data.SqlClient;
+using System.Collections.Specialized;
 
 namespace NEETLibrary
 {
     class Program
     {
-        const string connectionString = "Server=tcp:pakupaku.database.windows.net,1433;Initial Catalog=PakuPakuDB;Persist Security Info=False;User ID=Tiba;Password=Musi1379;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        const string connectionString = "http://133.167.68.6/PakuPakuDB/testGet.php";
         static void Main(string[] args)
         {
             TestSQL();
@@ -131,17 +133,11 @@ namespace NEETLibrary
 
         static void TestSQL()
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                var queryString = "SELECT * FROM dbo.m_user";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                var result = command.ExecuteReader();
-                while (result.Read())
-                {
-                    Console.WriteLine("ID:"+result.GetValue(0)+" name:"+ result.GetValue(1));
-                }
-            }
+            Handler.URL = connectionString;
+            var values = new NameValueCollection();
+            values["sql"] = SQLCreater.MasterAllGetSQL("m_user");
+            string result = Handler.DoPost(values);
+            var dic = Handler.ConvertDeserialize(result);
         }
     }
 }
