@@ -87,6 +87,24 @@ namespace NEETLibrary.Tiba.Com.Methods
         }
 
         /// <summary>
+        /// 落ちないInt型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static long? ToLong(this string data)
+        {
+            //nullを返す
+            if (long.TryParse(data, out long result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 日付に変換
         /// </summary>
         /// <param name="data">対象データ</param>

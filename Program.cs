@@ -136,6 +136,7 @@ namespace NEETLibrary
             Handler.URL = connectionString;
             var values = new NameValueCollection();
             values["sql"] = SQLCreater.MasterAllGetSQL("m_user");
+            values["table"] = "m_user";
             string result = Handler.DoPost(values);
             var dic = Handler.ConvertDeserialize(result);
         }
