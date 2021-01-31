@@ -10,5 +10,43 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
             var result = $@"SELECT * FROM {table}";
             return result;
         }
+
+        /// <summary>
+        /// Update文の作成
+        /// </summary>
+        /// <param name="dic">データ</param>
+        /// <param name="databaseName">DB名称</param>
+        /// <param name="tableName">テーブル名</param>
+        /// <param name="where">Where句</param>
+        /// <returns></returns>
+        public static string CreateUpdateSQLByDictionary(Dictionary<string, object> dic, string databaseName, string tableName, string where)
+        {
+            var result = $@"UPDATE {databaseName}.{tableName} SET";
+            foreach (var item in dic)
+            {
+                result += $@"{item.Key}={item.Value}";
+            }
+            var whereStr = $@"WHERE {where}";
+            result += $@"{whereStr};";
+            return result;
+        }
+
+        /// <summary>
+        /// Insert文の作成
+        /// </summary>
+        /// <param name="dic">データ</param>
+        /// <param name="databaseName">DB名称</param>
+        /// <param name="tableName">テーブル名</param>
+        /// <returns></returns>
+        public static string CreateInsertSQLByDictionary(Dictionary<string, object> dic, string databaseName, string tableName)
+        {
+            var result = $@"INSERT INTO {databaseName}.{tableName} VALUES (";
+            foreach (var item in dic)
+            {
+                result += $@"'{item.Value}',";
+            }
+            result += $@");";
+            return result;
+        }
     }
 }

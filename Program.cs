@@ -17,6 +17,8 @@ namespace NEETLibrary
         static void Main(string[] args)
         {
             TestSQL();
+            //TestFloatParseEx();
+            //TestDoubleParseEx();
             //TestSubString();
             //TestKanaToHira();
             //TestHiraToKana();
@@ -70,6 +72,28 @@ namespace NEETLibrary
             Console.WriteLine(result);
             stringTest = "00010";
             result = stringTest.ToInt();
+            Console.WriteLine(result);
+        }
+
+        static void TestFloatParseEx()
+        {
+            Console.WriteLine("FloatParseEx テスト--------------");
+            var stringTest = "0";
+            var result = stringTest.ToFloat();
+            Console.WriteLine(result);
+            stringTest = "0.01あ";
+            result = stringTest.ToFloatValue();
+            Console.WriteLine(result);
+        }
+
+        static void TestDoubleParseEx()
+        {
+            Console.WriteLine("DoubleParseEx テスト--------------");
+            var stringTest = "0";
+            var result = stringTest.ToDouble();
+            Console.WriteLine(result);
+            stringTest = "0.01";
+            result = stringTest.ToDouble();
             Console.WriteLine(result);
         }
 
@@ -135,8 +159,7 @@ namespace NEETLibrary
         {
             Handler.URL = connectionString;
             var values = new NameValueCollection();
-            values["sql"] = SQLCreater.MasterAllGetSQL("m_user");
-            values["table"] = "m_user";
+            values["sql"] = SQLCreater.MasterAllGetSQL("m_item");
             string result = Handler.DoPost(values);
             var dic = Handler.ConvertDeserialize(result);
         }

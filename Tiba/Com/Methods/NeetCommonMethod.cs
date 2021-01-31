@@ -87,7 +87,7 @@ namespace NEETLibrary.Tiba.Com.Methods
         }
 
         /// <summary>
-        /// 落ちないInt型
+        /// 落ちないlong型
         /// </summary>
         /// <param name="data">対象データ</param>
         /// <returns></returns>
@@ -101,6 +101,114 @@ namespace NEETLibrary.Tiba.Com.Methods
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないfloat型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static float? ToFloat(this string data)
+        {
+            //nullを返す
+            if (float.TryParse(data, out float result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないdouble型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static double? ToDouble(this string data)
+        {
+            //nullを返す
+            if (double.TryParse(data, out double result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないInt型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static int ToIntValue(this string data)
+        {
+            //0を返す
+            if (int.TryParse(data, out int result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないlong型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static long ToLongValue(this string data)
+        {
+            //0を返す
+            if (long.TryParse(data, out long result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないfloat型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static float ToFloatValue(this string data)
+        {
+            //0を返す
+            if (float.TryParse(data, out float result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないdouble型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static double? ToDoubleValue(this string data)
+        {
+            //0を返す
+            if (double.TryParse(data, out double result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
             }
         }
 
