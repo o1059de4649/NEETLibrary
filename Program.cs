@@ -13,10 +13,13 @@ namespace NEETLibrary
 {
     class Program
     {
-        const string connectionString = "http://133.167.68.6/PakuPakuDB/testGet.php";
+        const string connectionStringSelect = "http://133.167.68.6/PakuPakuDB/testGet.php";
+        const string connectionStringInsert = "http://133.167.68.6/PakuPakuDB/InsertAndUpdate.php";
         static void Main(string[] args)
         {
-            TestSQL();
+            //TestSQLInsert();
+            TestSQLUpdate();
+            //TestSQLSelect();
             //TestFloatParseEx();
             //TestDoubleParseEx();
             //TestSubString();
@@ -155,13 +158,39 @@ namespace NEETLibrary
             Console.WriteLine(strNList.GetPrev(2));
         }
 
-        static void TestSQL()
+        static void TestSQLSelect()
         {
-            Handler.URL = connectionString;
+            Handler.URL = connectionStringSelect;
             var values = new NameValueCollection();
             values["sql"] = SQLCreater.MasterAllGetSQL("m_item");
             string result = Handler.DoPost(values);
             var dic = Handler.ConvertDeserialize(result);
+        }
+
+        static void TestSQLInsert()
+        {
+            Handler.URL = connectionStringInsert;
+            var values = new NameValueCollection();
+            var dic = new Dictionary<string,object>();
+            dic.Add("id","4");
+            dic.Add("name","test4");
+            dic.Add("passWord","test");
+            values["sql"] = SQLCreater.CreateInsertSQLByDictionary(dic,"PakuPakuDB","m_player");
+            string result = Handler.DoPost(values);
+            //var res = Handler.ConvertDeserialize(result);
+        }
+
+        static void TestSQLUpdate()
+        {
+            Handler.URL = connectionStringInsert;
+            var values = new NameValueCollection();
+            var dic = new Dictionary<string, object>();
+            dic.Add("id", "4");
+            dic.Add("name", "test4update");
+            dic.Add("passWord", "test");
+            values["sql"] = SQLCreater.CreateUpdateSQLByDictionary(dic, "PakuPakuDB", "m_player","id=4");
+            string result = Handler.DoPost(values);
+            //var res = Handler.ConvertDeserialize(result);
         }
     }
 }

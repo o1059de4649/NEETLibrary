@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NEETLibrary.Tiba.Com.SqlConnection
@@ -21,12 +22,21 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
         /// <returns></returns>
         public static string CreateUpdateSQLByDictionary(Dictionary<string, object> dic, string databaseName, string tableName, string where)
         {
-            var result = $@"UPDATE {databaseName}.{tableName} SET";
+            var result = $@"UPDATE {databaseName}.{tableName} SET ";
             foreach (var item in dic)
             {
-                result += $@"{item.Key}={item.Value}";
+                
+                //最後の時
+                if (item.Key == dic.Last().Key && item.Value == dic.Last().Value)
+                {
+                    result += $@" {item.Key}= '{item.Value}' ";
+                }
+                else
+                {
+                    result += $@" {item.Key}= '{item.Value}',";
+                }
             }
-            var whereStr = $@"WHERE {where}";
+            var whereStr = $@" WHERE {where}";
             result += $@"{whereStr};";
             return result;
         }
@@ -43,9 +53,16 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
             var result = $@"INSERT INTO {databaseName}.{tableName} VALUES (";
             foreach (var item in dic)
             {
-                result += $@"'{item.Value}',";
+                //最後の時
+                if (item.Key == dic.Last().Key && item.Value == dic.Last().Value)
+                {
+                    result += $@" '{item.Value}' ";
+                }
+                else { 
+                    result += $@" '{item.Value}' ,";
+                }
             }
-            result += $@");";
+            result += $@" );";
             return result;
         }
     }
