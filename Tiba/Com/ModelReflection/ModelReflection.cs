@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace NEETLibrary.Tiba.Com.ModelRefrection
 {
-    class ModelRefrection
+    class ModelReflection
     {
         public Dictionary<string,object> ToDictionary()
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NEETLibrary.TestFolder
 {
-    class TestModel : ModelRefrection
+    class TestModel : ModelReflection
     {
         string test = "テスト内容";
     }
