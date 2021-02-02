@@ -18,7 +18,7 @@ namespace NEETLibrary
         static void Main(string[] args)
         {
             //TestSQLInsert();
-            TestSQLUpdate();
+            //TestSQLUpdate();
             //TestSQLSelect();
             //TestFloatParseEx();
             //TestDoubleParseEx();
@@ -31,6 +31,7 @@ namespace NEETLibrary
             //TestDateTime();
             //TestCopy();
             //TestNList();
+            TestRefrection();
         }
 
         static void TestSubString()
@@ -191,6 +192,15 @@ namespace NEETLibrary
             values["sql"] = SQLCreater.CreateUpdateSQLByDictionary(dic, "PakuPakuDB", "m_player","id=4");
             string result = Handler.DoPost(values);
             //var res = Handler.ConvertDeserialize(result);
+        }
+
+        static void TestRefrection() {
+            TestModel testModel = new TestModel();
+            var dic = testModel.ToDictionary();
+            foreach (var item in dic)
+            {
+                Console.WriteLine(item.Key + ":"+ item.Value);
+            }
         }
     }
 }
