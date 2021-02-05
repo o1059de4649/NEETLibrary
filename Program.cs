@@ -8,6 +8,7 @@ using NEETLibrary.Tiba.Com.Methods;
 using NEETLibrary.Tiba.Com.SqlConnection;
 using System.Data.SqlClient;
 using System.Collections.Specialized;
+using NEETLibrary.Tiba.Com.ModelRefrection;
 
 namespace NEETLibrary
 {
@@ -195,12 +196,11 @@ namespace NEETLibrary
         }
 
         static void TestRefrection() {
-            TestModel testModel = new TestModel();
-            var dic = testModel.ToDictionary();
-            foreach (var item in dic)
-            {
-                Console.WriteLine(item.Key + ":"+ item.Value);
-            }
+            TestModel getModel = new TestModel();
+            SetModel setModel = new SetModel();
+            //setModel.SetFields(testModel);
+            var res = ModelReflection.CopyTo(getModel, setModel);
+            Console.WriteLine(res.test1 + ":"+ res.test2);
         }
     }
 }

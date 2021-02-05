@@ -5,9 +5,9 @@ using System.Text;
 
 namespace NEETLibrary.TestFolder
 {
-    public class TestModel : ModelReflection
+    public class SetModel : ModelReflection
     {
-       public string test1 = "テスト内容1";
-       public string test2 = "テスト内容2";
+       public string test1 = "";
+       public string test2 = "";
     }
 }
