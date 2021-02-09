@@ -32,6 +32,7 @@ namespace NEETLibrary
             //TestDateTime();
             //TestCopy();
             //TestNList();
+            TestSQLInsert();
             TestRefrection();
         }
 
@@ -199,8 +200,12 @@ namespace NEETLibrary
             TestModel getModel = new TestModel();
             SetModel setModel = new SetModel();
             //setModel.SetFields(testModel);
-            var res = ModelReflection.CopyTo(getModel, setModel);
-            Console.WriteLine(res.test1 + ":"+ res.test2);
+            var res = NeetCommonMethod.CopyTo<SetModel>(getModel.GetType(), setModel.GetType());
+            var dic = res.ToDictionaryProperty();
+            foreach (var item in dic)
+            {
+                Console.WriteLine(item.Key + ":" + item.Value);
+            }
         }
     }
 }

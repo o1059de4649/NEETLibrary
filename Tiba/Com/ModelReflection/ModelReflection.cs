@@ -23,7 +23,7 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
             return dest;
         }
 
-        public Dictionary<string,object> ToDictionary()
+        public Dictionary<string,object> ToDictionaryField()
         {
             var type = this.GetType();
             var dic = new Dictionary<string,object>();
@@ -38,12 +38,27 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
             return dic;
         }
 
+        public Dictionary<string, object> ToDictionaryProperty()
+        {
+            var type = this.GetType();
+            var dic = new Dictionary<string, object>();
+            //メンバを取得する
+            var members = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            foreach (PropertyInfo item in members)
+            {
+                dic.Add(item.Name, item.GetValue(this));
+            }
+            return dic;
+        }
+
         /// <summary>
         /// セットする
         /// </summary>
         /// <param name="dicObj"></param>
         public void SetFields(ModelReflection dicObj) {
-            var dic = dicObj.ToDictionary();
+            var dic = dicObj.ToDictionaryField();
             //メンバを取得する
             var fields = this.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.Static |
@@ -66,7 +81,7 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
         public void SetProperties(ModelReflection dicObj)
         {
 
-            var dic = dicObj.ToDictionary();
+            var dic = dicObj.ToDictionaryProperty();
 
             //メンバを取得する
             var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic |

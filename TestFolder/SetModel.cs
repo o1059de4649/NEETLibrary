@@ -7,7 +7,7 @@ namespace NEETLibrary.TestFolder
 {
     public class SetModel : ModelReflection
     {
-       public string test1 = "";
-       public string test2 = "";
+       public string test1 { get; set; } = "";
+       public string test2 { get; set; } = "";
     }
 }

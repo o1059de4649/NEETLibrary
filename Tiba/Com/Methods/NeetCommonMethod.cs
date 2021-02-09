@@ -4,6 +4,7 @@ using System.Text;
 using System;
 using System.IO;
 using System.Globalization;
+using System.Reflection;
 
 namespace NEETLibrary.Tiba.Com.Methods
 {
@@ -229,7 +230,55 @@ namespace NEETLibrary.Tiba.Com.Methods
                 return null;
             }
         }
+
+        public static T CopyTo<T>(object src, T dest)
+        {
+            if (src == null || dest == null) return dest;
+            var srcProperties = src.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var destProperties = dest.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var properties = srcProperties.Join(destProperties, p => new { p.Name, p.FieldType }, p => new { p.Name, p.FieldType }, (p1, p2) => new { p1, p2 });
+            foreach (var property in properties)
+                property.p2.SetValue(dest, property.p1.GetValue(src));
+            return dest;
+        }
+
+        public static T CopyTo<T>(Type srcType, Type destType)
+        {
+            var srcProperties = srcType.GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var destProperties = destType.GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var properties = srcProperties.Join(destProperties, p => new { p.Name, p.FieldType }, p => new { p.Name, p.FieldType }, (p1, p2) => new { p1, p2 });
+            var dest = Activator.CreateInstance(destType);
+            var src = Activator.CreateInstance(srcType);
+            foreach (var property in properties)
+                property.p2.SetValue(dest, property.p1.GetValue(src));
+            return (T)dest;
+        }
+
+        public static Dictionary<string, object> ToDictionary(object obj)
+        {
+            var type = obj.GetType();
+            var dic = new Dictionary<string, object>();
+            //メンバを取得する
+            var members = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            foreach (FieldInfo item in members)
+            {
+                dic.Add(item.Name, item.GetValue(obj));
+            }
+            return dic;
+        }
     }
+
+
 
     public static class CopyInterFace<T> {
 

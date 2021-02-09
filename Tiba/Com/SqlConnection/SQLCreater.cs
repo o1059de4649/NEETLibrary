@@ -50,19 +50,19 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
         /// <returns></returns>
         public static string CreateInsertSQLByDictionary(Dictionary<string, object> dic, string databaseName, string tableName)
         {
-            var result = $@"INSERT INTO {databaseName}.{tableName} VALUES (";
+            var values = "";
             foreach (var item in dic)
             {
                 //最後の時
                 if (item.Key == dic.Last().Key && item.Value == dic.Last().Value)
                 {
-                    result += $@" '{item.Value}' ";
+                    values += $@" '{item.Value}' ";
                 }
-                else { 
-                    result += $@" '{item.Value}' ,";
+                else {
+                    values += $@" '{item.Value}' ,";
                 }
             }
-            result += $@" );";
+            var result = $@"INSERT INTO {databaseName}.{tableName} VALUES ({values});";
             return result;
         }
     }
