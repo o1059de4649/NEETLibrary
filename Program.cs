@@ -32,7 +32,8 @@ namespace NEETLibrary
             //TestDateTime();
             //TestCopy();
             //TestNList();
-            TestSQLInsert();
+            //TestSQLInsert();
+            //TestRefrection();
             TestRefrection();
         }
 
@@ -200,12 +201,17 @@ namespace NEETLibrary
             TestModel getModel = new TestModel();
             SetModel setModel = new SetModel();
             //setModel.SetFields(testModel);
-            var res = NeetCommonMethod.CopyTo<SetModel>(getModel.GetType(), setModel.GetType());
+            var res = NeetCommonMethod.CopyToProperties<SetModel>(getModel.GetType(), setModel.GetType());
             var dic = res.ToDictionaryProperty();
             foreach (var item in dic)
             {
                 Console.WriteLine(item.Key + ":" + item.Value);
             }
+        }
+
+        static void Snake() {
+            var result = NeetCommonMethod.CamelToSnake("id");
+            Console.WriteLine(result);
         }
     }
 }

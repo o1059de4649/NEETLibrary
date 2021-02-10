@@ -69,6 +69,17 @@ namespace NEETLibrary.Tiba.Com.Methods
         }
 
         /// <summary>
+        /// スネークケースに変換する。
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string CamelToSnake(string str)
+        {
+            var regex = new System.Text.RegularExpressions.Regex("[a-z][A-Z]");
+            return regex.Replace(str, s => $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}").ToLower();
+        }
+
+        /// <summary>
         /// カナ→ひら
         /// </summary>
         /// <param name="data">対象データ</param>
@@ -259,7 +270,7 @@ namespace NEETLibrary.Tiba.Com.Methods
             }
         }
 
-        public static T CopyTo<T>(object src, T dest)
+        public static T CopyToFields<T>(object src, T dest)
         {
             if (src == null || dest == null) return dest;
             var srcProperties = src.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
@@ -274,7 +285,7 @@ namespace NEETLibrary.Tiba.Com.Methods
             return dest;
         }
 
-        public static T CopyTo<T>(Type srcType, Type destType)
+        public static T CopyToFields<T>(Type srcType, Type destType)
         {
             var srcProperties = srcType.GetFields(BindingFlags.Public | BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.Static |
@@ -283,6 +294,37 @@ namespace NEETLibrary.Tiba.Com.Methods
                 BindingFlags.Instance | BindingFlags.Static |
                 BindingFlags.DeclaredOnly);
             var properties = srcProperties.Join(destProperties, p => new { p.Name, p.FieldType }, p => new { p.Name, p.FieldType }, (p1, p2) => new { p1, p2 });
+            var dest = Activator.CreateInstance(destType);
+            var src = Activator.CreateInstance(srcType);
+            foreach (var property in properties)
+                property.p2.SetValue(dest, property.p1.GetValue(src));
+            return (T)dest;
+        }
+
+        public static T CopyToProperties<T>(object src, T dest)
+        {
+            if (src == null || dest == null) return dest;
+            var srcProperties = src.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var destProperties = dest.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var properties = srcProperties.Join(destProperties, p => new { p.Name, p.PropertyType }, p => new { p.Name, p.PropertyType }, (p1, p2) => new { p1, p2 });
+            foreach (var property in properties)
+                property.p2.SetValue(dest, property.p1.GetValue(src));
+            return dest;
+        }
+
+        public static T CopyToProperties<T>(Type srcType, Type destType)
+        {
+            var srcProperties = srcType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var destProperties = destType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.Static |
+                BindingFlags.DeclaredOnly);
+            var properties = srcProperties.Join(destProperties, p => new { p.Name, p.PropertyType }, p => new { p.Name, p.PropertyType }, (p1, p2) => new { p1, p2 });
             var dest = Activator.CreateInstance(destType);
             var src = Activator.CreateInstance(srcType);
             foreach (var property in properties)
