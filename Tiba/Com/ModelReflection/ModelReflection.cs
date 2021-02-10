@@ -8,6 +8,9 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
 {
     public class ModelReflection
     {
+        public string last_update { get; set; }
+        public string last_user { get; set; }
+
         public static T CopyTo<T>(object src, T dest)
         {
             if (src == null || dest == null) return dest;
