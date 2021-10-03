@@ -7,8 +7,8 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
 {
     public class SQLCreater
     {
-        public static string MasterAllGetSQL(string table) {
-            var result = $@"SELECT * FROM {table}";
+        public static string MasterAllGetSQL(string databaseName, string table) {
+            var result = $@"SELECT * FROM {databaseName}.{table}";
             return result;
         }
 

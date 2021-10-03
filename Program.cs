@@ -14,13 +14,14 @@ namespace NEETLibrary
 {
     class Program
     {
-        const string connectionStringSelect = "http://133.167.68.6/PakuPakuDB/testGet.php";
-        const string connectionStringInsert = "http://133.167.68.6/PakuPakuDB/InsertAndUpdate.php";
+        const string connectionStringSelect = "https://www.tibaneet.com/SQL/Select.php";
+        const string connectionStringInsert = "https://www.tibaneet.com/SQL/InsertAndUpdate.php";
+        const string DB = "RolyPolyDB";
         static void Main(string[] args)
         {
             //TestSQLInsert();
             //TestSQLUpdate();
-            //TestSQLSelect();
+            TestSQLSelect();
             //TestFloatParseEx();
             //TestDoubleParseEx();
             //TestSubString();
@@ -34,7 +35,7 @@ namespace NEETLibrary
             //TestNList();
             //TestSQLInsert();
             //TestRefrection();
-            TestRefrection();
+            //TestRefrection();
         }
 
         static void TestSubString()
@@ -166,7 +167,7 @@ namespace NEETLibrary
         {
             Handler.URL = connectionStringSelect;
             var values = new NameValueCollection();
-            values["sql"] = SQLCreater.MasterAllGetSQL("m_item");
+            values["sql"] = SQLCreater.MasterAllGetSQL(DB, "m_creature");
             string result = Handler.DoPost(values);
             var dic = Handler.ConvertDeserialize(result);
         }

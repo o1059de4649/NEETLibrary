@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +24,11 @@ namespace NEETLibrary
         {
             try
             {
-                using (WebClient wc = new WebClient())
+                using (WebClient webClient = new WebClient())
                 {
-                    return Encoding.Default.GetString(wc.UploadValues(URL, Values));
+                    System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    return Encoding.Default.GetString(webClient.UploadValues(URL, Values));
                 }
             }
             catch (WebException e)
@@ -53,6 +58,11 @@ namespace NEETLibrary
             }
         }
 
+        //for testing purpose only, accept any dodgy certificate... 
+        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
         public static List<Dictionary<object, object>> ConvertDeserialize(string jsonstr) {
             // デシリアライズしてDictionaryに戻します。
             var json = JsonConvert.DeserializeObject<List<Dictionary<object, object>>>(jsonstr);
