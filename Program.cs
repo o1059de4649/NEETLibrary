@@ -19,9 +19,11 @@ namespace NEETLibrary
         const string DB = "RolyPolyDB";
         static void Main(string[] args)
         {
+            Console.WriteLine("ニートプログラマ千葉");
+
             //TestSQLInsert();
             //TestSQLUpdate();
-            TestSQLSelect();
+            //TestSQLSelect();
             //TestFloatParseEx();
             //TestDoubleParseEx();
             //TestSubString();
