@@ -73,10 +73,23 @@ namespace NEETLibrary.Tiba.Com.Methods
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static string CamelToSnake(string str)
+        public static string CamelToSnake(string str, bool isUpper = false)
         {
             var regex = new System.Text.RegularExpressions.Regex("[a-z][A-Z]");
-            return regex.Replace(str, s => $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}").ToLower();
+            var regexEx = new System.Text.RegularExpressions.Regex("[A-Z][A-Z]");
+
+            var testStr = regex.Replace(str, s =>
+            $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}"
+            );
+
+            var resRegex = (testStr.Contains("_")) ? regex : regexEx;
+            var res = resRegex.Replace(str, s =>
+            $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}"
+            );
+
+            return isUpper ? res.ToUpper()
+                : res.ToLower()
+                ;
         }
 
         /// <summary>

@@ -38,4 +38,3 @@ C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.pdb
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.genruntimeconfig.cache
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Debug\netcoreapp3.1\NEETLibrary.csproj.AssemblyReference.cache

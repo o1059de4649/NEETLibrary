@@ -14,8 +14,10 @@ namespace NEETLibrary
 {
     class Program
     {
-        const string connectionStringSelect = "https://www.tibaneet.com/SQL/Select.php";
-        const string connectionStringInsert = "https://www.tibaneet.com/SQL/InsertAndUpdate.php";
+        const string connectionStringSelect = "http://www.tibaneet.com/SQL/Select.php";
+        const string connectionStringInsert = "http://www.tibaneet.com/SQL/InsertAndUpdate.php";
+        //const string connectionStringSelect = "https://httpbin.org/post";
+        //const string connectionStringInsert = "https://httpbin.org/post";
         const string DB = "RolyPolyDB";
         static void Main(string[] args)
         {
@@ -37,7 +39,7 @@ namespace NEETLibrary
             //TestNList();
             //TestSQLInsert();
             //TestRefrection();
-            //TestRefrection();
+            TestRefrectionEx();
         }
 
         static void TestSubString()
@@ -210,6 +212,13 @@ namespace NEETLibrary
             {
                 Console.WriteLine(item.Key + ":" + item.Value);
             }
+        }
+
+        static void TestRefrectionEx()
+        {
+            TPlayer getModel = new TPlayer();
+            getModel.UpdateURL = connectionStringInsert; ;
+            getModel.Register(getModel, "FortniteDB");
         }
 
         static void Snake() {

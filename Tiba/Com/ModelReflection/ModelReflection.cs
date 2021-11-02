@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Linq;
+using NEETLibrary.Tiba.Com.Attribute;
+using NEETLibrary.Tiba.Com.Methods;
 
 namespace NEETLibrary.Tiba.Com.ModelRefrection
 {
@@ -38,7 +40,7 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
             return dic;
         }
 
-        public Dictionary<string, object> ToDictionaryProperty()
+        public Dictionary<string, object> ToDictionaryProperty(bool isPrimary = false, bool isRemoveAutoIncrement = false, bool isSnake = true, bool isUpper = false)
         {
             var type = this.GetType();
             var dic = new Dictionary<string, object>();
@@ -46,9 +48,35 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
             var members = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.Static |
                 BindingFlags.DeclaredOnly);
+
             foreach (PropertyInfo item in members)
             {
-                dic.Add(item.Name, item.GetValue(this));
+                //属性探知(プライマリーキー探索)
+                var primaryAttributes = item.GetCustomAttributes(typeof(PrimaryPropertyAttribute)).ToList();
+                var autoIncremenAttributes = item.GetCustomAttributes(typeof(AutoIncrementAttribute)).ToList();
+                var isPrimaryPropertyInfo = primaryAttributes.Count > 0 || autoIncremenAttributes.Count > 0;
+                var isAutoIncrementPropertyInfo = primaryAttributes.Count > 0;
+                var itemName = isSnake ? NeetCommonMethod.CamelToSnake(item.Name, isUpper) : item.Name;
+                //プライマリーキー探索有効
+                if (!isPrimary)
+                {
+                    dic.Add(itemName, item.GetValue(this));
+                }
+                else {
+                    //プライマリーキー抽出
+                    if (isPrimaryPropertyInfo) {
+                        //オートインクリメント削除探索有効
+                        if (!isRemoveAutoIncrement)
+                        {
+                            dic.Add(itemName, item.GetValue(this));
+                        }
+                        else {
+                            //オートインクリメント削除
+                            if (!isAutoIncrementPropertyInfo) dic.Add(itemName, item.GetValue(this));
+                        }
+                        
+                    }
+                }
             }
             return dic;
         }
