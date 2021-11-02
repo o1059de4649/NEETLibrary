@@ -10,6 +10,39 @@ namespace NEETLibrary.Tiba.Com.ModelRefrection
 {
     public class ModelReflection
     {
+        /// <summary>
+        /// DictionaryToClass
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public static T DictionaryToClass<T>(Dictionary<object, object> dict)
+        {
+            Type type = typeof(T);
+            var obj = Activator.CreateInstance(type);
+
+            foreach (var kv in dict)
+            {
+                var getPro = type.GetProperty(NeetCommonMethod.SnakeToLowerCamel(kv.Key.ToString()));
+                var typeName = getPro.PropertyType.FullName;
+                if (typeName.Contains("Int"))
+                {
+                    getPro.SetValue(obj, kv.Value.ToString().ToIntValue());
+                }
+                else if(typeName.Contains("Bool"))
+                {
+                    var b = (kv.Value.ToString() == "true" || kv.Value.ToString() == "True");
+                    getPro.SetValue(obj, b);
+                }
+                else
+                {
+                    getPro.SetValue(obj, kv.Value.ToString());
+                }
+
+            }
+            return (T)obj;
+        }
+
         public static T CopyTo<T>(object src, T dest)
         {
             if (src == null || dest == null) return dest;

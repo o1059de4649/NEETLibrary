@@ -14,7 +14,24 @@ namespace NEETLibrary.Tiba.Com.Models
     public class BaseModel : ModelReflection
     {
         public BaseModel() { }
+        /// <summary>
+        /// DB名称を取得する。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dest"></param>
+        /// <returns>DB名</returns>
+        public string GetDBName<T>(T dest) {
+            var atList = dest.GetType().GetCustomAttributes(typeof(DatabaseNameAttribute), false).ToList();
+            if (atList.Count <= 0)
+            {
+                throw new Exception("正規のモデルを利用してください。");
+            }
+            var modelAt = atList.FirstOrDefault();
+            DatabaseNameAttribute dbnameAt = modelAt as DatabaseNameAttribute;
 
+            var databaseName = dbnameAt.DatabaseName;
+            return databaseName;
+        }
         /// <summary>
         /// 汎用更新メソッド（追加・更新を自動判定）
         /// </summary>
@@ -23,17 +40,9 @@ namespace NEETLibrary.Tiba.Com.Models
         /// <param name="databaseName"></param>
         public void Register<T>(T dest)
         {
-            var atList = dest.GetType().GetCustomAttributes(typeof(DatabaseNameAttribute),false).ToList();
-            if (atList.Count <= 0) {
-                throw new Exception("正規のモデルを利用してください。");
-            }
-            var modelAt = atList.FirstOrDefault();
-            DatabaseNameAttribute dbnameAt = modelAt as DatabaseNameAttribute;
-            
-            var databaseName = dbnameAt.DatabaseName;
             //存在チェック
-            var isInsert = !isExist(dest, databaseName);
-
+            var isInsert = !isExist(dest);
+            var databaseName = GetDBName(dest);
             var tableName = NeetCommonMethod.CamelToSnake(dest.GetType().Name);
             var isRemoveAutoIncrement = true;
             var dic = this.ToDictionaryProperty(false, !isRemoveAutoIncrement);
@@ -48,7 +57,8 @@ namespace NEETLibrary.Tiba.Com.Models
             Handler.DoPost(Values);
         }
 
-        public bool isExist<T>(T dest, string databaseName) {
+        public bool isExist<T>(T dest) {
+            var databaseName = GetDBName(dest);
             var isRemoveAutoIncrement = true;
             var tableName = NeetCommonMethod.CamelToSnake(dest.GetType().Name);
             var pkdic = this.ToDictionaryProperty(true, !isRemoveAutoIncrement);
@@ -66,6 +76,21 @@ namespace NEETLibrary.Tiba.Com.Models
             var res = Handler.ConvertDeserialize(jsonStr);
             //存在する
             return (res.Count > 0);
+        }
+
+        public List<T> GetFindAll<T>(T dest){
+            var databaseName = GetDBName(dest);
+            var tableName = NeetCommonMethod.CamelToSnake(dest.GetType().Name);
+            var select = SQLCreater.MasterAllGetSQL(databaseName, tableName);
+            
+            NameValueCollection Values = new NameValueCollection();
+            Values["sql"] = select;
+            Handler.URL = Handler.SelectURL;
+            var jsonStr = Handler.DoPost(Values);
+            var res = Handler.ConvertDeserialize(jsonStr);
+            var list = res.Select(x => DictionaryToClass<T>(x)).ToList();
+            var result = list;
+            return result;
         }
     }
 }

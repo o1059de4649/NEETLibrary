@@ -218,6 +218,7 @@ namespace NEETLibrary
         {
             TPlayer getModel = new TPlayer();
             getModel.Register(getModel);
+            var res = getModel.GetFindAll(getModel);
         }
 
         static void Snake() {
