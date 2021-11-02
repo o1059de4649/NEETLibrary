@@ -11,7 +11,6 @@ C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\bin\
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\bin\Release\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\bin\Release\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Release\netcoreapp3.1\NEETLibrary.csproj.AssemblyReference.cache
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Release\netcoreapp3.1\NEETLibrary.AssemblyInfoInputs.cache
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Release\netcoreapp3.1\NEETLibrary.AssemblyInfo.cs
 C:\Users\agi13\Desktop\プライベート\自作ライブラリ\neetLibrary\obj\Release\netcoreapp3.1\NEETLibrary.csproj.CoreCompileInputs.cache

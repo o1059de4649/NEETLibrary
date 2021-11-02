@@ -14,8 +14,6 @@ namespace NEETLibrary.Tiba.Com.Models
     public class BaseModel : ModelReflection
     {
         public BaseModel() { }
-        public string UpdateURL = Handler.InsertAndUpdateURL;
-        public string SelectURL = Handler.SelectURL;
 
         /// <summary>
         /// 汎用更新メソッド（追加・更新を自動判定）
@@ -23,11 +21,16 @@ namespace NEETLibrary.Tiba.Com.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="dest"></param>
         /// <param name="databaseName"></param>
-        public void Register<T>(T dest, string databaseName = "")
+        public void Register<T>(T dest)
         {
-            var at = dest.GetType().GetCustomAttributes(typeof(DatabaseNameAttribute),false).ToList().FirstOrDefault();
-            DatabaseNameAttribute dbnameAt = at as DatabaseNameAttribute;
-            databaseName = dbnameAt.DatabaseName;
+            var atList = dest.GetType().GetCustomAttributes(typeof(DatabaseNameAttribute),false).ToList();
+            if (atList.Count <= 0) {
+                throw new Exception("正規のモデルを利用してください。");
+            }
+            var modelAt = atList.FirstOrDefault();
+            DatabaseNameAttribute dbnameAt = modelAt as DatabaseNameAttribute;
+            
+            var databaseName = dbnameAt.DatabaseName;
             //存在チェック
             var isInsert = !isExist(dest, databaseName);
 
@@ -41,7 +44,7 @@ namespace NEETLibrary.Tiba.Com.Models
                 ;
             NameValueCollection Values = new NameValueCollection();
             Values["sql"] = sql;
-            Handler.URL = UpdateURL;
+            Handler.URL = Handler.InsertAndUpdateURL;
             Handler.DoPost(Values);
         }
 
@@ -58,7 +61,7 @@ namespace NEETLibrary.Tiba.Com.Models
 
             NameValueCollection Values = new NameValueCollection();
             Values["sql"] = sb.ToString();
-            Handler.URL = SelectURL;
+            Handler.URL = Handler.SelectURL;
             var jsonStr = Handler.DoPost(Values);
             var res = Handler.ConvertDeserialize(jsonStr);
             //存在する

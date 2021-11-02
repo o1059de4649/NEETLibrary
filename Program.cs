@@ -217,8 +217,7 @@ namespace NEETLibrary
         static void TestRefrectionEx()
         {
             TPlayer getModel = new TPlayer();
-            getModel.UpdateURL = connectionStringInsert; ;
-            getModel.Register(getModel, "FortniteDB");
+            getModel.Register(getModel);
         }
 
         static void Snake() {

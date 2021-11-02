@@ -21,7 +21,7 @@ namespace NEETLibrary.TestFolder
     public class TPlayer : BaseModel
     {
         [AutoIncrement]
-        public long playerId { get; set; } = 1;
+        public long playerId { get; set; } = 3;
         public string playerName { get; set; } = "テスト内容2";
         public string profile { get; set; } = "テスト内容3";
         public string imagePath { get; set; } = "テスト内容5";
