@@ -6,6 +6,7 @@ using NEETLibrary.Tiba.Com.CSVConvert;
 using NEETLibrary.Tiba.Com.IEnumerableEx;
 using NEETLibrary.Tiba.Com.Methods;
 using NEETLibrary.Tiba.Com.SqlConnection;
+using NEETLibrary.Tiba.Com.Models;
 using System.Data.SqlClient;
 using System.Collections.Specialized;
 using NEETLibrary.Tiba.Com.ModelRefrection;
@@ -218,7 +219,7 @@ namespace NEETLibrary
         {
             TPlayer getModel = new TPlayer();
             getModel.Register(getModel);
-            var res = getModel.GetFindAll(getModel);
+            var res = BaseModel.GetFindAll(getModel);
         }
 
         static void Snake() {

@@ -20,7 +20,7 @@ namespace NEETLibrary.Tiba.Com.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="dest"></param>
         /// <returns>DB名</returns>
-        public string GetDBName<T>(T dest) {
+        static public string GetDBName<T>(T dest) {
             var atList = dest.GetType().GetCustomAttributes(typeof(DatabaseNameAttribute), false).ToList();
             if (atList.Count <= 0)
             {
@@ -78,7 +78,7 @@ namespace NEETLibrary.Tiba.Com.Models
             return (res.Count > 0);
         }
 
-        public List<T> GetFindAll<T>(T dest){
+        static public List<T> GetFindAll<T>(T dest){
             var databaseName = GetDBName(dest);
             var tableName = NeetCommonMethod.CamelToSnake(dest.GetType().Name);
             var select = SQLCreater.MasterAllGetSQL(databaseName, tableName);
