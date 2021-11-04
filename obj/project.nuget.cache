@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "FtgE4kyCRDsgFBdcGpA/8zao7Ex5fPRRL75phvOiFGU9aTE71n8aN+9sUQqZLCf0WbfPFeJpoLOFMcZbZdxSVQ==",
+  "dgSpecHash": "QjeLC87gAkqQ+pIl3GT18eVEPoV4SG9l11op7EsCB/XUcCslk6ViiCDog6edsL3uMgEvBIgzdSQg4SAq8YsxBQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\agi13\\Desktop\\プライベート\\自作ライブラリ\\neetLibrary\\NEETLibrary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\agi13\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\agi13\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\agi13\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\agi13\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\agi13\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\agi13\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
