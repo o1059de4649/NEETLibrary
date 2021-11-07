@@ -13,6 +13,12 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
             return result;
         }
 
+        public static string MasterAllGetSQL(string databaseName, string table, string join)
+        {
+            var result = $@"SELECT * FROM {databaseName}.{table} {join}";
+            return result;
+        }
+
         /// <summary>
         /// Update文の作成
         /// </summary>
@@ -89,6 +95,34 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
                     values += $@" AND '{NeetCommonMethod.CamelToSnake(item.Key)} = '{item.Value}'";
                 }
             }
+            var result = values;
+            return result;
+        }
+
+        /// <summary>
+        /// Join文の作成(Select文に利用)
+        /// </summary>
+        /// <param name="dic">データ</param>
+        /// <param name="databaseName">DB名称</param>
+        /// <param name="tableName">テーブル名</param>
+        /// <returns></returns>
+        public static string CreateJoinSQLByDictionary(Dictionary<string, object> baseDic, string databaseName, string baseTableName,string targetTableName,bool isLeft = false)
+        {
+            var values = isLeft ? $@" LEFT JOIN {databaseName}.{targetTableName} ON " : $@" INNER JOIN {databaseName}.{targetTableName} ON ";
+            if (baseDic.Count <= 0) return "";
+            foreach (var item in baseDic)
+            {
+                //最初の時
+                if (item.Key == baseDic.First().Key && item.Value == baseDic.First().Value)
+                {
+                    values += $@" {databaseName}.{baseTableName}.{NeetCommonMethod.CamelToSnake(item.Key)} = {databaseName}.{targetTableName}.{NeetCommonMethod.CamelToSnake(item.Key)}";
+                }
+                else
+                {
+                    values += $@" AND {databaseName}.{baseTableName}.{NeetCommonMethod.CamelToSnake(item.Key)} = {databaseName}.{targetTableName}.{NeetCommonMethod.CamelToSnake(item.Key)} ";
+                }
+            }
+            values += ";";
             var result = values;
             return result;
         }

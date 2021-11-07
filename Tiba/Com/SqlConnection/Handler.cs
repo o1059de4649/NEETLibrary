@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace NEETLibrary
 {
-    class Handler
+    public class Handler
     {
         //ポスト先のURL
         public static string URL { get; set; }

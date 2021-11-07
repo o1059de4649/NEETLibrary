@@ -204,22 +204,22 @@ namespace NEETLibrary
         }
 
         static void TestRefrection() {
-            TestModel getModel = new TestModel();
-            SetModel setModel = new SetModel();
-            //setModel.SetFields(testModel);
-            var res = NeetCommonMethod.CopyToProperties<SetModel>(getModel.GetType(), setModel.GetType());
-            var dic = res.ToDictionaryProperty();
-            foreach (var item in dic)
-            {
-                Console.WriteLine(item.Key + ":" + item.Value);
-            }
+            //TestModel getModel = new TestModel();
+            //SetModel setModel = new SetModel();
+            ////setModel.SetFields(testModel);
+            //var res = NeetCommonMethod.CopyToProperties<SetModel>(getModel.GetType(), setModel.GetType());
+            //var dic = res.ToDictionaryProperty();
+            //foreach (var item in dic)
+            //{
+            //    Console.WriteLine(item.Key + ":" + item.Value);
+            //}
         }
 
         static void TestRefrectionEx()
         {
-            TPlayer getModel = new TPlayer();
-            getModel.Register(getModel);
-            var res = BaseModel.GetFindAll(getModel);
+            //TPlayer getModel = new TPlayer();
+            //getModel.Register(getModel);
+            //var res = BaseModel.GetFindAll(getModel);
         }
 
         static void Snake() {

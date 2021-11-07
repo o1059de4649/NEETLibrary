@@ -92,5 +92,24 @@ namespace NEETLibrary.Tiba.Com.Models
             var result = list;
             return result;
         }
+
+        public List<(T,K)> Join<T,K>(T baseModel, K targetModel)
+        {
+            var databaseName = GetDBName(baseModel);
+            var baseTableName = NeetCommonMethod.CamelToSnake(baseModel.GetType().Name);
+            var targetTableName = NeetCommonMethod.CamelToSnake(targetModel.GetType().Name);
+            var pkdic = this.ToDictionaryProperty(true, false);
+            var join = SQLCreater.CreateJoinSQLByDictionary(pkdic, databaseName, baseTableName, targetTableName);
+            var select = SQLCreater.MasterAllGetSQL(databaseName, baseTableName,join);
+
+            NameValueCollection Values = new NameValueCollection();
+            Values["sql"] = select;
+            Handler.URL = Handler.SelectURL;
+            var jsonStr = Handler.DoPost(Values);
+            var res = Handler.ConvertDeserialize(jsonStr);
+            var list = res.Select(x => DictionaryToClass<T>(x)).ToList();
+            var result = list;
+            return null;
+        }
     }
 }
