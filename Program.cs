@@ -217,7 +217,10 @@ namespace NEETLibrary
 
         static void TestRefrectionEx()
         {
-            //TPlayer getModel = new TPlayer();
+            //TTeam getModel = new TTeam() { 
+            // playerId = 1,
+            // teamId = 2,
+            //};
             //getModel.Register(getModel);
             //var res = BaseModel.GetFindAll(getModel);
         }

@@ -92,7 +92,7 @@ namespace NEETLibrary.Tiba.Com.SqlConnection
                 }
                 else
                 {
-                    values += $@" AND '{NeetCommonMethod.CamelToSnake(item.Key)} = '{item.Value}'";
+                    values += $@" AND {NeetCommonMethod.CamelToSnake(item.Key)} = '{item.Value}'";
                 }
             }
             var result = values;

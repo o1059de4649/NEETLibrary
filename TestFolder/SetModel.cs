@@ -1,4 +1,6 @@
-﻿using NEETLibrary.Tiba.Com.ModelRefrection;
+﻿using NEETLibrary.Tiba.Com.Attribute;
+using NEETLibrary.Tiba.Com.ModelRefrection;
+using NEETLibrary.Tiba.Com.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,4 +14,17 @@ namespace NEETLibrary.TestFolder
        public string test3 { get; set; } = "";
        public string test4 { get; set; } = "";
     }
+
+    //[DatabaseName(DatabaseName = "FortniteDB")]
+    //public class TTeam : BaseModel
+    //{
+
+    //    [PrimaryProperty]
+    //    public long teamId { get; set; }
+
+    //    [PrimaryProperty]
+    //    public long playerId { get; set; }
+
+    //}
+
 }
