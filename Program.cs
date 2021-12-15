@@ -15,6 +15,7 @@ namespace NEETLibrary
 {
     class Program
     {
+        const string connectionStringTest = "http://www.tibaneet.com/SQL/Hello.php";
         const string connectionStringSelect = "http://www.tibaneet.com/SQL/Select.php";
         const string connectionStringInsert = "http://www.tibaneet.com/SQL/InsertAndUpdate.php";
         //const string connectionStringSelect = "https://httpbin.org/post";
@@ -40,7 +41,8 @@ namespace NEETLibrary
             //TestNList();
             //TestSQLInsert();
             //TestRefrection();
-            TestRefrectionEx();
+            //TestRefrectionEx();
+            GetAllModels();
         }
 
         static void TestSubString()
@@ -170,7 +172,7 @@ namespace NEETLibrary
 
         static void TestSQLSelect()
         {
-            Handler.URL = connectionStringSelect;
+            Handler.URL = connectionStringTest;
             var values = new NameValueCollection();
             values["sql"] = SQLCreater.MasterAllGetSQL(DB, "m_creature");
             string result = Handler.DoPost(values);
@@ -227,6 +229,14 @@ namespace NEETLibrary
 
         static void Snake() {
             var result = NeetCommonMethod.CamelToSnake("id");
+            Console.WriteLine(result);
+        }
+
+
+        static void GetAllModels()
+        {
+            var model = new MTibaGundan();
+            var result = BaseModel.GetFindAll<MTibaGundan>(model);
             Console.WriteLine(result);
         }
     }

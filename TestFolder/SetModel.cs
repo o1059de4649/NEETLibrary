@@ -9,22 +9,43 @@ namespace NEETLibrary.TestFolder
 {
     public class SetModel : ModelReflection
     {
-       public string test1 { get; set; } = "";
-       public string test2 { get; set; } = "";
-       public string test3 { get; set; } = "";
-       public string test4 { get; set; } = "";
+        public string test1 { get; set; } = "";
+        public string test2 { get; set; } = "";
+        public string test3 { get; set; } = "";
+        public string test4 { get; set; } = "";
     }
 
-    //[DatabaseName(DatabaseName = "FortniteDB")]
-    //public class TTeam : BaseModel
-    //{
+    [DatabaseName(DatabaseName = "FortniteDB")]
+    public class MTibaGundan : BaseModel
+    {
 
-    //    [PrimaryProperty]
-    //    public long teamId { get; set; }
+        [AutoIncrement]
+        public long tibaPlayerId { get; set; }
 
-    //    [PrimaryProperty]
-    //    public long playerId { get; set; }
 
-    //}
+        public string playerName { get; set; }
 
+
+        public string subTitle { get; set; }
+
+
+        public string description { get; set; }
+
+
+        public string imagePath { get; set; }
+
+
+        //[DatabaseName(DatabaseName = "FortniteDB")]
+        //public class TTeam : BaseModel
+        //{
+
+        //    [PrimaryProperty]
+        //    public long teamId { get; set; }
+
+        //    [PrimaryProperty]
+        //    public long playerId { get; set; }
+
+        //}
+
+    }
 }

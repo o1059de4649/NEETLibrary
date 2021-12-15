@@ -29,6 +29,15 @@ namespace NEETLibrary.Tiba.Com.IEnumerableEx
             return this[count];
         }
 
+        public bool IsLast(T t)
+        {
+            var count = this.IndexOf(t) + 1;
+            if (count == this.Count) { 
+                return true; 
+            }
+            return false;
+        }
+
         public T GetNext(int nextIndex)
         {
             var count = nextIndex + 1;

@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Globalization;
 using System.Reflection;
+using NEETLibrary.Tiba.Com.IEnumerableEx;
 
 namespace NEETLibrary.Tiba.Com.Methods
 {
@@ -13,6 +14,8 @@ namespace NEETLibrary.Tiba.Com.Methods
     /// </summary>
     public static class NeetCommonMethod
     {
+        const string abcLowerList = "abcdefghijklmnopqrstuvwxyz";
+        const string abcUpperList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string kanaList = "アイウエオカキクケコサシスセソタチツテトナニヌネノマミムメモハヒフヘホラリルレロヤユヨワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポァィゥェォャュョ";
         const string hiraList = "あいうえおかきくけこさしすせそたちつてとなにぬねのまみむめもはひふへほらりるれろやゆよわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽぁぃぅぇぉゃゅょ";
 
@@ -75,17 +78,26 @@ namespace NEETLibrary.Tiba.Com.Methods
         /// <returns></returns>
         public static string CamelToSnake(string str, bool isUpper = false)
         {
-            var regex = new System.Text.RegularExpressions.Regex("[a-z][A-Z]");
-            var regexEx = new System.Text.RegularExpressions.Regex("[A-Z][A-Z]");
-
-            var testStr = regex.Replace(str, s =>
-            $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}"
-            );
-
-            var resRegex = (testStr.Contains("_")) ? regex : regexEx;
-            var res = resRegex.Replace(str, s =>
-            $"{s.Groups[0].Value[0]}_{s.Groups[0].Value[1]}"
-            );
+            var charList = new NList<char>();
+            foreach (var item in str)
+            {
+                charList.Add(item);
+            }
+            int index = 1;
+            var target = new NList<char>();
+            for (int i = 0; i < charList.Count; i++)
+            {
+                var item = charList[i];
+                var nextItem = (charList.Count > i + 1)? charList[i + 1] : new char();
+                target.Add(item);
+                if (!charList.IsLast(item) && abcUpperList.Contains(nextItem))
+                {
+                    target.Insert(index, '_');
+                    index++;
+                }
+                index++;
+            }
+            var res = new string(target.ToArray());
 
             return isUpper ? res.ToUpper()
                 : res.ToLower()
