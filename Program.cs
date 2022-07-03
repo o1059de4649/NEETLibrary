@@ -1,17 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using Cse.Models.Database;
+using CSELibrary.Com.CSVConvert;
+using CSELibrary.Com.IEnumerableEx;
+using CSELibrary.Com.Methods;
+using CSELibrary.Com.Methods.Security;
+using CSELibrary.Com.ModelRefrection;
+using CSELibrary.Com.SqlConnection;
+using CSELibrary.TestFolder;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using NEETLibrary.TestFolder;
-using NEETLibrary.Tiba.Com.CSVConvert;
-using NEETLibrary.Tiba.Com.IEnumerableEx;
-using NEETLibrary.Tiba.Com.Methods;
-using NEETLibrary.Tiba.Com.SqlConnection;
-using NEETLibrary.Tiba.Com.Models;
-using System.Data.SqlClient;
 using System.Collections.Specialized;
-using NEETLibrary.Tiba.Com.ModelRefrection;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace NEETLibrary
+namespace CSELibrary
 {
     class Program
     {
@@ -23,7 +25,7 @@ namespace NEETLibrary
         const string DB = "RolyPolyDB";
         static void Main(string[] args)
         {
-            Console.WriteLine("ニートプログラマ千葉");
+            //Console.WriteLine("ニートプログラマ千葉");
 
             //TestSQLInsert();
             //TestSQLUpdate();
@@ -42,9 +44,35 @@ namespace NEETLibrary
             //TestSQLInsert();
             //TestRefrection();
             //TestRefrectionEx();
-            GetAllModels();
+            //GetAllModels();
+            //RegisterForEntitry();
+            //DeleteForEntitry();
+            //SecurityTest();
+            //FullWidthNumberToHalfWidthNumberTest();
+            PropertyNameTest();
         }
 
+        static void FullWidthNumberToHalfWidthNumberTest()
+        {
+            Console.WriteLine("数値の全角半角変換テスト");
+            Console.WriteLine("０１２３４５６７８９".FullWidthNumberToHalfWidthNumber());
+            Console.WriteLine("０1あ２い３う4５６7８９10".FullWidthNumberToHalfWidthNumber());
+            //例）郵便番号「5530014」、住所2「1-3-4〇〇マンション5F-301-」の場合、「55300141-3-4-5-301」となる
+            var zip = "5530014";
+            var target = $@"{zip}1-3-4〇〇マンション5F-301-";
+            var targetList = Regex.Split(target.FullWidthNumberToHalfWidthNumber(), @"[^0-9]").ToList();
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                if (targetList[i] == "")
+                {
+                    targetList[i] = null;
+                }
+            }
+            targetList.RemoveAll(x => x == null);
+            var res = string.Join("-", targetList);
+            Console.WriteLine(res);
+
+        }
         static void TestSubString()
         {
             Console.WriteLine("SubStringテスト--------------");
@@ -150,16 +178,16 @@ namespace NEETLibrary
         }
 
         static void TestCopy() {
-            Console.WriteLine("ディープコピー テスト--------------");
-            var strList = new List<string>() { "A", "B", "C" };
-            var strList2 = CopyInterFace<List<string>>.DeepCopy(strList);
-            strList2[0] = "Z";
-            Console.WriteLine(strList == strList2);
-            var character = new Character() { id = 1, name = "スライム" };
-            var character2 = CopyInterFace<Character>.DeepCopy(character);
-            var character3 = character;
-            Console.WriteLine($@"ディープコピー:{character == character2}");
-            Console.WriteLine($@"シャローコピー:{character == character3}");
+            //Console.WriteLine("ディープコピー テスト--------------");
+            //var strList = new List<string>() { "A", "B", "C" };
+            //var strList2 = CopyInterFace<List<string>>.DeepCopy(strList);
+            //strList2[0] = "Z";
+            //Console.WriteLine(strList == strList2);
+            //var character = new Character() { id = 1, name = "スライム" };
+            //var character2 = CopyInterFace<Character>.DeepCopy(character);
+            //var character3 = character;
+            //Console.WriteLine($@"ディープコピー:{character == character2}");
+            //Console.WriteLine($@"シャローコピー:{character == character3}");
 
         }
 
@@ -228,16 +256,92 @@ namespace NEETLibrary
         }
 
         static void Snake() {
-            var result = NeetCommonMethod.CamelToSnake("id");
+            var result = CseCommonMethod.CamelToSnake("id");
             Console.WriteLine(result);
         }
 
 
         static void GetAllModels()
         {
-            var model = new MTibaGundan();
-            var result = BaseModel.GetFindAll<MTibaGundan>(model);
-            Console.WriteLine(result);
+            //var model = new MTibaGundan();
+            //var result = BaseModel.GetFindAll<MTibaGundan>(model);
+            //Console.WriteLine(result);
+        }
+
+        private static AppDbContext CreateContext() {
+            var _context = new DbContextOptionsBuilder<AppDbContext>()
+            .UseSqlServer(@"Data Source=tcp:tukimuradb.database.windows.net,1433;Initial Catalog=tukimuradev;User Id=sqldbadmin@tukimuradb;Password=f)wTAHf7CHgb")
+            .Options;
+            var context = new AppDbContext(_context);
+            return context;
+        }
+
+        private static async void RegisterForEntitry() {
+            using (var SqlAccesser = new SQLAccesser<AppDbContext>(CreateContext()))
+            {
+                //CONtextの生成が課題となる。
+                TEST_USER model = new TEST_USER()
+                {
+                    ID = "1",
+                    NAME = "touroku1b",
+                };
+
+                TEST_USER model2 = new TEST_USER()
+                {
+                    ID = "2",
+                    NAME = "touroku2a",
+                };
+                var list = new List<TEST_USER>() {
+                    model,
+                    model2,
+                };
+                SqlAccesser.Register(list);
+                await SqlAccesser.SaveAsync();
+            }
+        }
+
+        private static void DeleteForEntitry()
+        {
+            using (var SqlAccesser = new SQLAccesser<AppDbContext>(CreateContext())) {
+                List<object> list = new List<object>();
+                list.Add("2");
+                var model = SqlAccesser.Select<TEST_USER>(list.ToArray());
+                SqlAccesser.Delete(model);
+                SqlAccesser.Save();
+            }
+        }
+        private static void SecurityTest()
+        {
+            int HASH_ROOP = 930;
+            var passWord = "test";
+            var user_id = "test";
+            var pasHash = SecurityMethods.EncodeHashPassword(passWord, user_id, HASH_ROOP);
+            Console.WriteLine(pasHash);
+        }
+
+        private static void SecurityTest2(List<string> passList, List<string> userList)
+        {
+            int HASH_ROOP = 930;
+            // カウントチェック
+            if (passList.Count != userList.Count) {
+                Console.WriteLine("Not match List Count");
+                return;
+            }
+            var resList = new List<string>();
+            foreach ((var user, var index) in userList.Indexed())
+            {
+                resList.Add(SecurityMethods.EncodeHashPassword(passList[index], user, HASH_ROOP));
+            }
+
+            Console.WriteLine(string.Join(',',resList));
+        }
+
+        private static void PropertyNameTest()
+        {
+            Console.WriteLine("Refrection開始");
+            ModelReflection.CreatePropertyNames<TestModel>().ForEach(x => {
+                Console.WriteLine(x);
+            });
         }
     }
 }

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>a14f59e8-088a-41ef-88f4-21bbd8c61d85</UserSecretsId>
+    <Company>eJAN</Company>
+    <Authors>a.izumi</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cse\Unity\**" />
+    <EmbeddedResource Remove="Cse\Unity\**" />
+    <None Remove="Cse\Unity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PdfSharp" Version="1.50.5147" />
+    <PackageReference Include="SendGrid" Version="9.28.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DotNetBarcode">
+      <HintPath>dll\DotNetBarcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call syncCopy.bat" />
+  </Target>-->
+
+</Project>
